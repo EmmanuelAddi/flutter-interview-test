@@ -13,10 +13,25 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   final searchController = TextEditingController();
+  List<User> users = [];
+
+  void loadUsers() async {                          
+    var loadedData = await allData();
+    if (loadedData is List) {
+      var loadedUsers = User.fromJsonToList(loadedData);
+      setState(() {
+        users = loadedUsers;
+      });
+    } else {
+      // Handle the case when allData() doesn't return a valid list
+      print("Failed to load users.");
+    }
+  }
 
   @override
   void initState() {
     super.initState();
+    loadUsers(); // Load users in initState
     searchController.addListener(_filterList);
   }
 
@@ -66,8 +81,9 @@ class _MyHomePageState extends State<MyHomePage> {
               itemBuilder: (context, index) {
                 final item = users[index];
                 return ListTile(
-                  title: Text('name'),
-                  subtitle: Text('role'),
+                  title: Text(item.firstName + ' ' + item.lastName), // Use the user's name
+                  subtitle: Text(item.role), // Use the user's role
+                  leading: _getUserAvatar(item.avatar), // Show the user's avatar
                 );
               },
             ),
@@ -77,6 +93,9 @@ class _MyHomePageState extends State<MyHomePage> {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
             var newUser = User(id: "b32ec56c-21bb-4b7b-a3a0-635b8bca1f9d", avatar: null, firstName: "James", lastName: "May", email: "ssaull1c@tripod.com", role: "Developer");
+            setState(() {
+            users.add(newUser);
+          });
         },
         tooltip: 'Add new',
         child: Icon(Icons.add),
