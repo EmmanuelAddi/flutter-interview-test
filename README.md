@@ -39,4 +39,4 @@ This is a quick flutter test to see what you are capable to achive in a real wor
 - Add a search to filter that filters by user's first name, last name, role and email
 
 ### TASK 5 - Suggestions                                                                              
-- What would you suggest to improve the code
+- What would you suggest to improve the code                                                                            

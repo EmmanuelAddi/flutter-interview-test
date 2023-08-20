@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:interview/data/user.dart';
 import 'package:interview/data/mock_data.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key? key, required this.title}) : super(key: key);
@@ -47,7 +48,14 @@ class _MyHomePageState extends State<MyHomePage> {
     var users = User.fromJsonToList(allData());
 
     _getUserAvatar(url) {
-      return CircleAvatar(backgroundImage: NetworkImage(url));
+      return CircleAvatar(
+        backgroundImage: url == null ? NetworkImage(url) :
+        null,
+        child: url == null ? Icon(
+          FontAwesomeIcons.image,
+          color: Colors.white,
+        ) : null,
+        );
     }
 
     return Scaffold(
